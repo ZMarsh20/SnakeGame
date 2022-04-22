@@ -2,7 +2,7 @@ from tkinter import *
 import random
 import os
 
-def Restart():
+def saveScore():
     global score, Name
     names = []
     Scores = []
@@ -43,31 +43,23 @@ def Restart():
             f.write(c + "\n")
             f.write(d + "\n")
     root.destroy()
-    os.system('Final.py')
 
+uTurn = ""
 def changeU(e):
-    global snake, blocks
-    if snake[head] == 'D':
-        snake[head] = 'D'
-    else:
+    global snake, blocks, uTurn
+    if uTurn != 'D':
         snake[head] = 'U'
 def changeD(e):
-    global snake, blocks
-    if snake[head] == 'U':
-        snake[head] = 'U'
-    else:
+    global snake, blocks, uTurn
+    if uTurn != 'U':
         snake[head] = 'D'
 def changeR(e):
-    global snake, blocks
-    if snake[head] == 'L':
-        snake[head] = 'L'
-    else:
+    global snake, blocks, uTurn
+    if uTurn != 'L':
         snake[head] = 'R'
 def changeL(e):
-    global snake, blocks, i
-    if snake[head] == 'R':
-        snake[head] = 'R'
-    else:
+    global snake, blocks, uTurn
+    if uTurn != 'R':
         snake[head] = 'L'
 
 i = -1
@@ -99,7 +91,8 @@ def apple(x,y):
         if dir == 'U':
             canvas.move(block, c0, (d0 + 25))
 def Snake():
-    global snake, head, A, photo, g, i, speed
+    global snake, head, A, photo, g, i, speed, uTurn
+    uTurn = snake[head]
     for k, v in snake.items():
         if v == 'U':
             canvas.move(k, 0, -25)
@@ -208,8 +201,7 @@ speed1 = 10
 scorespeed = 0
 
 label = Label(root, text='Score:       Time: ').grid(row=0, column=2)
-caution = Label(root, text="CAUTION: Too quick of a U turn can be deadly").grid(row=2, column=2)
-restart = Button(root, text="Restart", command=Restart, width=25).grid(row=3, column=2)
+restart = Button(root, text="Save Score", command=saveScore, width=25).grid(row=2, column=2)
 canvas.bind("<Down>", changeD)
 canvas.bind("<Up>", changeU)
 canvas.bind("<Right>", changeR)
